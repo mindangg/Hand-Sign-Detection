@@ -11,7 +11,6 @@ classifier = Classifier('Model/keras_model.h5', 'Model/labels.txt')
 offset = 20
 imgSize = 300
 
-folder = 'Data/C'
 counter = 0
 
 labels = ['A', 'B', 'C', 'F***']
