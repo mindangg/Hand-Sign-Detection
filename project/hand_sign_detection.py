@@ -6,16 +6,16 @@ import math
 
 cap = cv2.VideoCapture(0)
 detector = HandDetector(maxHands=1)
-classifier = Classifier('Model/keras_model.h5', 'Model/labels.txt')
+classifier = Classifier('project/Model/letters_model.h5', 'project/Model/letters_labels.txt')
+# classifier = Classifier('project/Model/digits_model.h5', 'project/Model/digits_labels.txt')
 
 offset = 20
 imgSize = 300
 
-counter = 0
+labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
+          'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-            'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-
+labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 while True:
     try:
@@ -47,6 +47,7 @@ while True:
                 imgResize = cv2.resize(imgCrop, (wCal, imgSize))
                 wGap = math.ceil((imgSize - wCal) / 2)
                 imgWhite[:, wGap: wCal + wGap] = imgResize
+                print("DEBUG: Image shape going into model:", imgWhite.shape)
                 prediction, index = classifier.getPrediction(imgWhite, draw = False)
                 print(prediction, index)
 
@@ -69,6 +70,7 @@ while True:
             cv2.imshow('ImageCrop', imgCrop)
             cv2.imshow('ImageWhite', imgWhite)
         
+        # imgOutput = cv2.resize(imgOutput, (1920, 1080))
         cv2.imshow('Image', imgOutput)
         cv2.waitKey(1)
 
